@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Catalog";
+}
+
+<section class="position-absolute top-0 start-0" style="margin-top: 49px;">
+
+    <div class="card border-0 rounded-0">
+
+        <img src="~/images/main_banner_custom.png" class="card-img border-0 rounded-0" alt="main_banner" height="260px" />
+
+        <div class="card-img-overlay">
+
+            <div class="container  align-content-center  h-100">
+                <img src="~/images/main_banner_text.svg" class="" alt="main_banner_text" />
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="position-absolute top-0 start-0   bg-success  text-white  w-100" style="margin-top: 309px">
+
+    <div class="container">
+
+        <form asp-controller="Catalog" asp-action="Index" method="post" class="d-flex gap-2 py-1">
+
+            <div class="form-floating">
+                <select class="form-select  bg-success  text-white  fw-bold" id="floatingSelect" aria-label="Floating label select example">
+                    <option selected>All</option>
+                </select>
+                <label for="floatingSelect" class="text-uppercase">Brands</label>
+            </div>
+
+            <div class="form-floating">
+                <select class="form-select  bg-success  text-white  fw-bold" id="floatingSelect" aria-label="Floating label select example">
+                    <option selected>All</option>
+                </select>
+                <label for="floatingSelect" class="text-uppercase">Types</label>
+            </div>
+
+            <input class="btn btn-warning" type="image" src="~/images/arrow-right.svg" />
+
+        </form>
+
+    </div>
+
+</section>
+
+<section class="" style="margin-top: 326px;">
+
+    <div class="container">
+        @if (1 > 0)
+        {
+            @Html.Partial("_pagination")
+
+            <div class="row row-cols-1 row-cols-md-3 g-4  py-2">
+                @foreach (var catalogItem in Enumerable.Range(start: 1, count: 10))
+                {
+                    <div class="col">
+                        @Html.Partial("_product")
+                    </div>
+                }
+            </div>
+
+            @Html.Partial("_pagination")
+        }
+        else
+        {
+            <div class="esh-catalog-items row">
+                THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+            </div>
+        }
+    </div>
+
+</section>
