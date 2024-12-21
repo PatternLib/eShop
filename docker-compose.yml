@@ -1,0 +1,43 @@
+services:
+  dbcontext:
+    image: mysql:8.0.40
+    container_name: MySQL
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: pass@word
+    healthcheck:
+      test: ["CMD", "mysqladmin", "-uroot", "-ppass@word",  "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 20s
+      retries: 10
+
+  catalog:
+    image: eshop/catalog
+    container_name: Catalog
+    build:
+      context: .
+      dockerfile: source/Services/Catalog/Dockerfile
+    ports:
+      - "5101:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+    depends_on:
+      dbcontext:
+        condition: service_healthy
+
+  webmvc:
+    image: eshop/webmvc
+    container_name: WebMvc
+    build:
+      context: .
+      dockerfile: source/Web/WebMvc/Dockerfile
+    ports:
+      - "5100:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - CatalogUrl=http://catalog:8080
+    depends_on:
+      - catalog

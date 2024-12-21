@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Catalog";
+    @model CatalogIndexViewModel
 }
 
 <section class="position-absolute top-0 start-0" style="margin-top: 49px;">
@@ -27,17 +28,13 @@
         <form asp-controller="Catalog" asp-action="Index" method="post" class="d-flex gap-2 py-1">
 
             <div class="form-floating">
-                <select class="form-select  bg-success  text-white  fw-bold" id="floatingSelect" aria-label="Floating label select example">
-                    <option selected>All</option>
-                </select>
-                <label for="floatingSelect" class="text-uppercase">Brands</label>
+                <select asp-for="@Model.BrandFilterApplied" asp-items="@Model.Brands" class="form-select  bg-success  text-white  fw-bold" id="floatingSelect" aria-label="Floating label select example"></select>
+                <label asp-for="@Model.BrandFilterApplied" class="text-uppercase">Brands</label>
             </div>
 
             <div class="form-floating">
-                <select class="form-select  bg-success  text-white  fw-bold" id="floatingSelect" aria-label="Floating label select example">
-                    <option selected>All</option>
-                </select>
-                <label for="floatingSelect" class="text-uppercase">Types</label>
+                <select asp-for="@Model.TypeFilterApplied" asp-items="@Model.Types" class="form-select  bg-success  text-white  fw-bold" id="floatingSelect" aria-label="Floating label select example"></select>
+                <label asp-for="@Model.TypeFilterApplied" class="text-uppercase">Types</label>
             </div>
 
             <input class="btn btn-warning" type="image" src="~/images/arrow-right.svg" />
@@ -51,20 +48,20 @@
 <section class="" style="margin-top: 326px;">
 
     <div class="container">
-        @if (1 > 0)
+        @if (Model.CatalogItems.Count() > 0)
         {
-            @Html.Partial("_pagination")
+            <partial name="_pagination" model="Model.PaginationInfo"/>
 
             <div class="row row-cols-1 row-cols-md-3 g-4  py-2">
-                @foreach (var catalogItem in Enumerable.Range(start: 1, count: 10))
+                @foreach (var item in Model.CatalogItems)
                 {
                     <div class="col">
-                        @Html.Partial("_product")
+                        <partial name="_product" model="item" />
                     </div>
                 }
             </div>
 
-            @Html.Partial("_pagination")
+            <partial name="_pagination" model="Model.PaginationInfo" />
         }
         else
         {

@@ -1,19 +1,16 @@
-﻿<form asp-controller="Cart" asp-action="AddToCart" class="card">
+﻿@{
+    @model CatalogItem
+}
 
-    <!--img src="..." class="card-img-top" alt="..."-->
-    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
-        <title>Placeholder</title>
-        <rect width="100%" height="100%" fill="#868e96"></rect>
-    </svg>
-    
+<form asp-controller="Cart" asp-action="AddToCart" class="card">
+
+    <img src="@Model.PictureUri" class="card-img-top" alt="@Model.Name">
+
     <div class="card-body align-content-center justify-content-center text-center">
-        <input class="btn btn-success   disabled   placeholder  w-100" type="submit" value="[ ADD TO CART ]" />
-        <p class="card-text text-uppercase  py-1 m-0  placeholder-glow">
-            <span class="placeholder col-7"></span>
-            <span class="placeholder col-4"></span>
-        </p>
-        <h5 class="card-title py-1 m-0  placeholder col-6"></h5>
+        <input class="btn btn-success   @(!User.Identity.IsAuthenticated ? "disabled" : "") w-100" type="submit" value="[ ADD TO CART ]" />
+        <p class="card-text text-uppercase  py-1 m-0 ">@Model.Name</p>
+        <h5 class="card-title py-1 m-0 ">@Model.Price.ToString("N2")</h5>
     </div>
 
-    <input type="hidden" name="id" />
+    <input type="hidden" asp-for="@Model.Id"/>
 </form>

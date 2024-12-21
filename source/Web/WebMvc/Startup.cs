@@ -1,3 +1,5 @@
+using EShopOnContainers.WebMvc.Services;
+
 namespace EShopOnContainers.WebMvc;
 
 public class Startup
@@ -13,6 +15,9 @@ public class Startup
     {
         // Add services to the container.
         services.AddMvc(setupAction: options => options.EnableEndpointRouting = false);
+
+        services.Configure<AppSettingsJson>(config: Configuration);
+        services.AddHttpClient<ICatalogServices, CatalogServices>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
