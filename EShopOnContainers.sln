@@ -3,31 +3,49 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{DF4BC4A7-31DA-40A0-BF10-0657DB00C9BA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{9185A607-3A18-4CA8-9383-8AFD746538DD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{263242E9-39B3-454E-BD0E-864F46F565A5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{12BF158F-A526-44F8-B2F4-55AEA19C3177}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebMvc", "WebMvc", "{ECA37142-8AAE-4166-9559-6AAF57EDD768}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebMvc", "WebMvc", "{049E2964-2B6F-406B-A055-D5664CDBDA42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnContainers.WebMvc", "source\Web\WebMvc\EShopOnContainers.WebMvc.csproj", "{42B24E20-5C43-4E8A-A02A-8F0D52BB6202}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnContainers.WebMvc", "source\Web\WebMvc\EShopOnContainers.WebMvc.csproj", "{1B7F702E-E69D-4FDB-B427-42E66988D1D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{AFECE38F-20D5-4C2C-BE7D-77B48AF7EFE6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{3E61F520-BE9B-40D8-9C53-5A1B2720A36F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnContainers.Catalog", "source\Services\Catalog\EShopOnContainers.Catalog.csproj", "{0371C0A8-1863-4B65-8C27-E383DA6112C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{1C339551-D06E-46E9-8ABC-840433A25099}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B7F702E-E69D-4FDB-B427-42E66988D1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B7F702E-E69D-4FDB-B427-42E66988D1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B7F702E-E69D-4FDB-B427-42E66988D1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B7F702E-E69D-4FDB-B427-42E66988D1D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0371C0A8-1863-4B65-8C27-E383DA6112C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0371C0A8-1863-4B65-8C27-E383DA6112C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0371C0A8-1863-4B65-8C27-E383DA6112C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0371C0A8-1863-4B65-8C27-E383DA6112C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{42B24E20-5C43-4E8A-A02A-8F0D52BB6202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42B24E20-5C43-4E8A-A02A-8F0D52BB6202}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42B24E20-5C43-4E8A-A02A-8F0D52BB6202}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42B24E20-5C43-4E8A-A02A-8F0D52BB6202}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{263242E9-39B3-454E-BD0E-864F46F565A5} = {DF4BC4A7-31DA-40A0-BF10-0657DB00C9BA}
-		{ECA37142-8AAE-4166-9559-6AAF57EDD768} = {263242E9-39B3-454E-BD0E-864F46F565A5}
-		{42B24E20-5C43-4E8A-A02A-8F0D52BB6202} = {ECA37142-8AAE-4166-9559-6AAF57EDD768}
+		{12BF158F-A526-44F8-B2F4-55AEA19C3177} = {9185A607-3A18-4CA8-9383-8AFD746538DD}
+		{049E2964-2B6F-406B-A055-D5664CDBDA42} = {12BF158F-A526-44F8-B2F4-55AEA19C3177}
+		{1B7F702E-E69D-4FDB-B427-42E66988D1D2} = {049E2964-2B6F-406B-A055-D5664CDBDA42}
+		{AFECE38F-20D5-4C2C-BE7D-77B48AF7EFE6} = {9185A607-3A18-4CA8-9383-8AFD746538DD}
+		{3E61F520-BE9B-40D8-9C53-5A1B2720A36F} = {AFECE38F-20D5-4C2C-BE7D-77B48AF7EFE6}
+		{0371C0A8-1863-4B65-8C27-E383DA6112C9} = {3E61F520-BE9B-40D8-9C53-5A1B2720A36F}
 	EndGlobalSection
 EndGlobal
