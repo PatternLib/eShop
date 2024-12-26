@@ -1,0 +1,39 @@
+services:
+  dbcontext:
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: pass@word
+    healthcheck:
+      test: ["CMD", "mysqladmin", "-uroot", "-ppass@word",  "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 20s
+      retries: 10
+
+  identity:
+    ports:
+      - "5105:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=${ESHOP_ASPNETCORE_URLS}
+      - ConnectionString=Server=dbcontext;Database=IdentityDb;User=root;Password=pass@word
+      - MvcClient=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5100
+
+  catalog:
+    ports:
+      - "5101:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=${ESHOP_ASPNETCORE_URLS}
+      - ConnectionString=Server=dbcontext;Database=CatalogDb;User=root;Password=pass@word
+      - PicBaseUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5101/api/v1/catalog/items/[0]/pic/
+
+  webmvc:
+    ports:
+      - "5100:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=${ESHOP_ASPNETCORE_URLS}
+      - CatalogUrl=http://catalog
+      - IdentityUrl=http://192.168.1.2:5105 # See hosts file
+      # docker network create eshop -o parent=eth0 --gateway=192.168.1.10  --subnet=192.168.1.0/24 -d macvlan

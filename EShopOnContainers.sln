@@ -19,8 +19,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnContainers.Catalog",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{1C339551-D06E-46E9-8ABC-840433A25099}"
 	ProjectSection(SolutionItems) = preProject
+		.env = .env
+		docker-compose.override.yml = docker-compose.override.yml
 		docker-compose.yml = docker-compose.yml
+		hosts = hosts
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{56D31CC5-3A09-445B-B180-0D079B6E1D29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnContainers.Identity", "source\Services\Identity\EShopOnContainers.Identity.csproj", "{937F8165-874D-446B-9B88-D772045B059D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +43,10 @@ Global
 		{0371C0A8-1863-4B65-8C27-E383DA6112C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0371C0A8-1863-4B65-8C27-E383DA6112C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0371C0A8-1863-4B65-8C27-E383DA6112C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{937F8165-874D-446B-9B88-D772045B059D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{937F8165-874D-446B-9B88-D772045B059D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{937F8165-874D-446B-9B88-D772045B059D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{937F8165-874D-446B-9B88-D772045B059D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,5 +58,7 @@ Global
 		{AFECE38F-20D5-4C2C-BE7D-77B48AF7EFE6} = {9185A607-3A18-4CA8-9383-8AFD746538DD}
 		{3E61F520-BE9B-40D8-9C53-5A1B2720A36F} = {AFECE38F-20D5-4C2C-BE7D-77B48AF7EFE6}
 		{0371C0A8-1863-4B65-8C27-E383DA6112C9} = {3E61F520-BE9B-40D8-9C53-5A1B2720A36F}
+		{56D31CC5-3A09-445B-B180-0D079B6E1D29} = {AFECE38F-20D5-4C2C-BE7D-77B48AF7EFE6}
+		{937F8165-874D-446B-9B88-D772045B059D} = {56D31CC5-3A09-445B-B180-0D079B6E1D29}
 	EndGlobalSection
 EndGlobal

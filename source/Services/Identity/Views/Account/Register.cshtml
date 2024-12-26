@@ -1,0 +1,191 @@
+﻿@{
+	ViewData["Title"] = "Register";
+	@model AccountRegisterViewModel
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row g-5">
+	<div class="col-md-5 col-lg-4 order-md-last">
+		<section>
+			<h3>Use another service to register.</h3>
+			<hr />
+			@{
+				if ((Model.ExternalLogins?.Count ?? 0) == 0)
+				{
+					<div>
+						<p>
+							There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+								article
+								about setting up this ASP.NET application to support logging in via external services
+							</a>.
+						</p>
+					</div>
+				}
+				else
+				{
+					<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+						<div>
+							<p>
+								@foreach (var provider in Model.ExternalLogins!)
+								{
+									<button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+								}
+							</p>
+						</div>
+					</form>
+				}
+			}
+		</section>
+	</div>
+
+	<div class="col-md-7 col-lg-8">
+
+		<h4 class="mb-3">Create new account</h4>
+
+		<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+
+			<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+			<div class="row g-3">
+				<div class="col-sm-6">
+					<label asp-for="Input.User.Name" class="form-label">First name</label>
+					<input asp-for="Input.User.Name" class="form-control">
+					<span asp-validation-for="Input.User.Name" class="text-danger" />
+				</div>
+
+				<div class="col-sm-6">
+					<label asp-for="Input.User.LastName" class="form-label">Last name</label>
+					<input asp-for="Input.User.LastName" class="form-control">
+					<span asp-validation-for="Input.User.LastName" class="text-danger" />
+				</div>
+
+				<div class="col-12">
+					<label asp-for="Input.User.PhoneNumber" class="form-label">Phone number</label>
+					<input asp-for="Input.User.PhoneNumber" class="form-control" placeholder="318 345 67 89">
+					<span asp-validation-for="Input.User.PhoneNumber" class="text-danger" />
+				</div>
+
+				<div class="col-12">
+					<label asp-for="Input.Email" class="form-label">Email</label>
+					<input asp-for="Input.Email" class="form-control" placeholder="you@example.com">
+					<span asp-validation-for="Input.Email" class="text-danger" />
+				</div>
+
+				<div class="col-12">
+					<label asp-for="Input.User.Street" class="form-label">Address</label>
+					<input asp-for="Input.User.Street" class="form-control" placeholder="1234 Main St">
+					<span asp-validation-for="Input.User.Street" class="text-danger" />
+				</div>
+
+				<div class="col-md-6">
+					<label asp-for="Input.User.Country" class="form-label">Country</label>
+					<input asp-for="Input.User.Country" class="form-control" />
+					<span asp-validation-for="Input.User.Country" class="text-danger" />
+				</div>
+
+				<div class="col-md-6">
+					<label asp-for="Input.User.State" class="form-label">State</label>
+					<input asp-for="Input.User.State" class="form-control" />
+					<span asp-validation-for="Input.User.State" class="text-danger" />
+				</div>
+
+				<div class="col-md-6">
+					<label asp-for="Input.User.City" class="form-label">City</label>
+					<input asp-for="Input.User.City" class="form-control" />
+					<span asp-validation-for="Input.User.City" class="text-danger" />
+				</div>
+
+				<div class="col-md-6">
+					<label asp-for="Input.User.ZipCode" class="form-label">Zip</label>
+					<input asp-for="Input.User.ZipCode" class="form-control" />
+					<span asp-validation-for="Input.User.ZipCode" />
+				</div>
+			</div>
+
+			<!--hr class="my-4">
+
+			<div class="form-check">
+			  <input type="checkbox" class="form-check-input" id="same-address">
+			  <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
+			</div>
+
+			<div class="form-check">
+			  <input type="checkbox" class="form-check-input" id="save-info">
+			  <label class="form-check-label" for="save-info">Save this information for next time</label>
+			</div-->
+
+			<hr class="my-4">
+
+			<h4 class="mb-3">Payment</h4>
+
+			<div class="my-3">
+				<div class="form-check">
+					<input id="credit" value="1" asp-for="Input.User.CardType" type="radio" class="form-check-input" />
+					<label class="form-check-label" for="credit">Credit card</label>
+				</div>
+				<div class="form-check">
+					<input id="debit" value="2" asp-for="Input.User.CardType" type="radio" class="form-check-input" />
+					<label class="form-check-label" for="debit">Debit card</label>
+				</div>
+				<div class="form-check">
+					<input id="paypal" value="3" asp-for="Input.User.CardType" type="radio" class="form-check-input" />
+					<label class="form-check-label" for="paypal">PayPal</label>
+				</div>
+			</div>
+
+			<div class="row gy-3">
+				<div class="col-md-6">
+					<label asp-for="Input.User.CardHolderName" class="form-label">Name on card</label>
+					<input asp-for="Input.User.CardHolderName" class="form-control" />
+					<small class="text-body-secondary">Full name as displayed on card</small>
+					<span asp-validation-for="Input.User.CardHolderName" class="text-danger" />
+				</div>
+
+				<div class="col-md-6">
+					<label asp-for="Input.User.CardNumber" class="form-label">Credit card number</label>
+					<input asp-for="Input.User.CardNumber" class="form-control" />
+					<span asp-validation-for="Input.User.CardNumber" class="text-danger" />
+				</div>
+
+				<div class="col-md-3">
+					<label asp-for="Input.User.Expiration" class="form-label">Expiration</label>
+					<input asp-for="Input.User.Expiration" class="form-control" />
+					<span asp-validation-for="Input.User.Expiration" class="text-danger" />
+				</div>
+
+				<div class="col-md-3">
+					<label asp-for="Input.User.SecurityNumber" class="form-label">CVV</label>
+					<input asp-for="Input.User.SecurityNumber" class="form-control" />
+					<span asp-validation-for="Input.User.SecurityNumber" class="text-danger" />
+				</div>
+			</div>
+
+			<hr class="my-4">
+
+
+			<div class="form-floating mb-3">
+				<input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+				<label asp-for="Input.Password">Password</label>
+				<span asp-validation-for="Input.Password" class="text-danger"></span>
+			</div>
+			<div class="form-floating mb-3">
+				<input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+				<label asp-for="Input.ConfirmPassword">Confirm Password</label>
+				<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+			</div>
+
+			<hr class="my-4">
+
+			<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+
+		</form>
+
+	</div>
+</div>
+
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
