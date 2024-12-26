@@ -13,6 +13,7 @@ public class Program
     public static IWebHost BuildWebHost(string[] args)
     {
         return WebHost.CreateDefaultBuilder(args: args)
+            .UseContentRoot(contentRoot: Directory.GetCurrentDirectory())
             .UseStartup<Startup>()
             .Build();
     }
