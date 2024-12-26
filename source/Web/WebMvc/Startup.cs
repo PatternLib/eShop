@@ -1,3 +1,4 @@
+using EShopOnContainers.WebMvc.Extensions;
 using EShopOnContainers.WebMvc.Services;
 
 namespace EShopOnContainers.WebMvc;
@@ -15,7 +16,7 @@ public class Startup
     {
         // Add services to the container.
         services.AddMvc(setupAction: options => options.EnableEndpointRouting = false);
-
+        services.AddOIDCAuthExtensions(Configuration);
         services.Configure<AppSettingsJson>(config: Configuration);
         services.AddHttpClient<ICatalogServices, CatalogServices>();
     }
@@ -30,12 +31,9 @@ public class Startup
             app.UseHsts();
         }
 
-        app.UseHttpsRedirection();
         app.UseStaticFiles();
 
-        app.UseRouting();
-
-        app.UseAuthorization();
+        app.UseAuthentication();
 
         app.UseMvc(configureRoutes: routes =>
         {
