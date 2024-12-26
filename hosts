@@ -1,0 +1,9 @@
+# Local: You need to open your local dev-machine firewall at range 5100-5110. 
+# Local: You need to open the hosts file:  %WinDir%\System32\Drivers\Etc\hosts
+# Local: IP of the host (your local machine)
+
+
+# Added by Docker Desktop
+
+192.168.1.2 host.docker.internal
+192.168.1.2 gateway.docker.internal
