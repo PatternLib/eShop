@@ -1,14 +1,19 @@
+using Microsoft.AspNetCore;
+
 namespace EShopOnContainers.Basket;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
-        var app = builder.Build();
+        BuildWebHost(args: args)
+            .Run();
+    }
 
-        app.MapGet("/", () => "Hello World!");
-
-        app.Run();
+    public static IWebHost BuildWebHost(string[] args)
+    {
+        return WebHost.CreateDefaultBuilder(args)
+            .UseStartup<Startup>()
+            .Build();
     }
 }
