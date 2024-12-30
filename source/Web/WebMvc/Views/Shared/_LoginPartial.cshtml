@@ -1,19 +1,44 @@
-﻿<ul class="navbar-nav">
-    @if (User.Identity!.IsAuthenticated)
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="Catalog" asp-action="Index" title="Manage">Hello @User.Identity?.Name!</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Catalog")">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
-        </li>
-    }
+﻿@{
+	@using EShopOnContainers.WebMvc.Services
+	@inject IIdentityParser<ApplicationUser> UserParser
+}
+
+<ul class="navbar-nav">
+	@if (User.Identity!.IsAuthenticated)
+	{
+		<li class="nav-item">
+			<div class="dropdown text-end">
+				<button class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+					Hello @User.Identity?.Name!
+				</button>
+				<ul class="dropdown-menu text-small">
+					<li><a class="dropdown-item" href="#">My orders</a></li>
+					<li><a class="dropdown-item" href="#">Settings</a></li>
+					<li><a class="dropdown-item" href="#">Profile</a></li>
+					<li><hr class="dropdown-divider"></li>
+					<li>
+						<div class="dropdown-item">
+							<form class="form-inline" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Catalog")">
+								<button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+							</form>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</li>
+		<li class="nav-item">
+			@await Component.InvokeAsync(
+				name: "BasketCounter", 
+				arguments: new { User = UserParser .Parse(principal: User) })
+		</li>
+
+
+
+	}
+	else
+	{
+		<li class="nav-item">
+			<a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+		</li>
+	}
 </ul>
