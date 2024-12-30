@@ -57,7 +57,7 @@ public static class OpenIDSeedData
                     Permissions.Prefixes.Scope + Scopes.OpenId, // Requerido para generar ID token, access_token
                     Permissions.Prefixes.Scope + Scopes.Profile, // Ensure 'profile' scope is listed
                     //Permissions.Prefixes.Scope + "orders", // Recursos a los que puede acceder
-                    //Permissions.Prefixes.Scope + "basket",
+                    Permissions.Prefixes.Scope + "basket",
                     //Permissions.Prefixes.Scope + "locations",
                     //Permissions.Prefixes.Scope + "marketing",
                     //Permissions.Prefixes.Scope + "webshoppingagg",
