@@ -101,6 +101,13 @@ public class AccountController : Controller
                     message: "The user with associated with account {0} has successfully logged in", 
                     args: [Input.Email]);
 
+                var user = await _userManager.FindByNameAsync(userName: Input.Email);
+
+                await _signInManager.SignInWithClaimsAsync(
+                    user: user,
+                    isPersistent: Input.RememberMe,
+                    additionalClaims: user.SignInClaimsExtension(_userManager: _userManager));
+
                 return LocalRedirect(localUrl: returnUrl);
             }
             if (result.RequiresTwoFactor)
