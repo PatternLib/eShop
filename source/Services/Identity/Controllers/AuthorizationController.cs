@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using EShopOnContainers.Identity.Extensions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -59,19 +60,11 @@ public class AuthorizationController : Controller
         }
 
         // Create a new claims principal
-        var claims = new List<Claim>
-            {
-            // 'subject' claim which is required
-                new Claim(Claims.Subject, authResult.Principal.Identity.Name),
-                new Claim(Claims.Name, authResult.Principal.Identity.Name),
-                new Claim(Claims.Username, authResult.Principal.Identity.Name),
-                new Claim(Claims.Audience, "test"),
-        };
+        var claims = authResult.Principal.Claims.ToList();
 
-        var email = authResult.Principal.Claims.FirstOrDefault(q => q.Type == ClaimTypes.Email);
-        if (email is not null)
+        foreach(var claim in request.GetScopes())
         {
-            claims.Add(new Claim(Claims.Email, email.Value));
+            claims.Add(item: new Claim(type: Claims.Audience, value: claim));
         }
 
         /**
@@ -85,35 +78,7 @@ public class AuthorizationController : Controller
         // Set requested scopes (this is not done automatically)
         claimsPrincipal.SetScopes(request.GetScopes());
 
-        foreach (var claim in claimsPrincipal.Claims)
-        {
-            claim.SetDestinations(claim.Type switch
-            {
-                // If the "profile" scope was granted, allow the "name" claim to be
-                // added to the access and identity tokens derived from the principal.
-                Claims.Name when claimsPrincipal.HasScope(Scopes.Profile) => new[]
-                {
-                    Destinations.AccessToken,
-                    Destinations.IdentityToken
-                },
-                Claims.Email when claimsPrincipal.HasScope(Scopes.Profile) => new[]
-                {
-                    Destinations.AccessToken,
-                    Destinations.IdentityToken
-                },
-
-                // Never add the "secret_value" claim to access or identity tokens.
-                // In this case, it will only be added to authorization codes,
-                // refresh tokens and user/device codes, that are always encrypted.
-                "secret_value" => Array.Empty<string>(),
-
-                // Otherwise, add the claim to the access tokens only.
-                _ => new[]
-                {
-                    Destinations.AccessToken
-                }
-            });
-        }
+        claimsPrincipal.SetDestinationsExtension();
 
         // Signing in with the OpenIddict authentiction scheme trigger OpenIddict to issue a code (which can be exchanged for an access token)
         return SignIn(claimsPrincipal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
@@ -156,6 +121,11 @@ public class AuthorizationController : Controller
 
             // Subject (sub) is a required field, Use the client_id as the subject identifier.
             identity.SetClaim(Claims.Subject, request.ClientId ?? throw new InvalidOperationException());
+
+            foreach (var claim in request.GetScopes())
+            {
+                identity.SetClaim(type: Claims.Audience, value: claim);
+            }
 
             claimsPrincipal = new ClaimsPrincipal(identity);
 
