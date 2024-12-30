@@ -1,0 +1,60 @@
+﻿@{
+	ViewData["Title"] = "Details";
+	@model CatalogItem
+
+}
+<section class="position-absolute top-0 start-0" style="margin-top: 70px;">
+
+	<div class="card border-0 rounded-0">
+
+		<img src="~/images/main_banner_custom.png" class="card-img border-0 rounded-0" alt="main_banner" height="260px" />
+
+		<div class="card-img-overlay">
+
+			<div class="container  align-content-center  h-100">
+				<img src="~/images/main_banner_text.svg" class="" alt="main_banner_text" />
+			</div>
+
+		</div>
+
+	</div>
+
+</section>
+
+<section class="" style="margin-top: 326px;">
+	<div class="card mb-3">
+		<div class="row g-0">
+			<div class="col-md-8">
+				<img src="@Model.PictureUri" class="img-fluid rounded-start" alt="@Model.Name">
+			</div>
+			<div class="col-md-4">
+				<div class="card-body">
+					<h5 class="card-title">@Model.Name</h5>
+					<h6 class="card-subtitle mb-2 text-muted">
+						<span class="fw-bold">REF: </span>
+						<span class="text-muted">105114738638-941</span>
+						<span> | 6 Artículos</span>
+					</h6>
+					<h5 class="card-title">$ @Model.Price.ToString(format: "N2")</h5>
+					<p class="card-text">@Model.Description</p>
+					<form asp-controller="Basket" asp-action="AddToBasket" class="row">
+						<div class="col-4">
+							<input type="number" name="quantity" class="form-control" min="1" value="@(ViewData["COUNT_ITEM"] ?? 1)" placeholder="1" aria-label="quantity">
+						</div>
+						<input type="hidden" asp-for="@Model.Id" />
+						<input type="hidden" asp-for="@Model.PictureUri" />
+						<input type="hidden" asp-for="@Model.Price" />
+						<input type="hidden" asp-for="@Model.Name" />
+						<input type="hidden" asp-for="@Model.Description" />
+						<div class="col-8 mb-3">
+							<button class="btn btn-success  w-100" type="submit" name="action" value="[ ADD TO CART ]">[ ADD TO CART ]</button>
+						</div>
+						<div class="col mt-2">
+							<a asp-controller="Catalog" asp-action="Index" class="btn btn-warning  w-100" >[ BACK TO CATALOG ]</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
