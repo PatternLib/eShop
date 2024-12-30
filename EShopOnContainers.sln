@@ -17,14 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{3E61
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnContainers.Catalog", "source\Services\Catalog\EShopOnContainers.Catalog.csproj", "{0371C0A8-1863-4B65-8C27-E383DA6112C9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{1C339551-D06E-46E9-8ABC-840433A25099}"
-	ProjectSection(SolutionItems) = preProject
-		.env = .env
-		docker-compose.override.yml = docker-compose.override.yml
-		docker-compose.yml = docker-compose.yml
-		hosts = hosts
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{56D31CC5-3A09-445B-B180-0D079B6E1D29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnContainers.Identity", "source\Services\Identity\EShopOnContainers.Identity.csproj", "{937F8165-874D-446B-9B88-D772045B059D}"
@@ -32,6 +24,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{CF9D08B4-419F-4B6A-8724-C0406D181E98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnContainers.Basket", "source\Services\Basket\EShopOnContainers.Basket.csproj", "{432FE0C3-1F72-468E-A7FA-6D780BFA11A3}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{56A7B849-B02F-4D2E-98B1-B305EEA1F6B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +49,10 @@ Global
 		{432FE0C3-1F72-468E-A7FA-6D780BFA11A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{432FE0C3-1F72-468E-A7FA-6D780BFA11A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{432FE0C3-1F72-468E-A7FA-6D780BFA11A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56A7B849-B02F-4D2E-98B1-B305EEA1F6B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56A7B849-B02F-4D2E-98B1-B305EEA1F6B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56A7B849-B02F-4D2E-98B1-B305EEA1F6B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56A7B849-B02F-4D2E-98B1-B305EEA1F6B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

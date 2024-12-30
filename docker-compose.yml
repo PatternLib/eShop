@@ -1,34 +1,48 @@
 services:
 
-  dbcontext:
+  db.mysql:
     image: mysql:8.0.40
     container_name: MySQL
 
-  identity:
+  basket.data:
+    image: redis:alpine
+    container_name: BasketOnRedis
+
+  identity.idp:
     image: eshop/identity
     container_name: Identity
     build:
       context: .
       dockerfile: source/Services/Identity/Dockerfile
     depends_on:
-      dbcontext:
+      db.mysql:
         condition: service_healthy
 
-  catalog:
+  catalog.api:
     image: eshop/catalog
     container_name: Catalog
     build:
       context: .
       dockerfile: source/Services/Catalog/Dockerfile
     depends_on:
-      dbcontext:
+      db.mysql:
+        condition: service_healthy
+  
+  basket.api:
+    image: eshop/basket
+    container_name: Basket
+    build:
+      context: .
+      dockerfile: source/Services/Basket/Dockerfile
+    depends_on:
+      basket.data:
         condition: service_healthy
 
-  webmvc:
+  web.mvc:
     image: eshop/webmvc
     container_name: WebMvc
     build:
       context: .
       dockerfile: source/Web/WebMvc/Dockerfile
     depends_on:
-      - catalog
+      - catalog.api
