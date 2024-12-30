@@ -1,11 +1,11 @@
 ﻿namespace EShopOnContainers.Basket.Domain;
 
-public class CostumerBasket
+public class CustomerBasket
 {
     public string BuyerId { get; set; }
     public List<BasketItem> Items { get; set; }
 
-    public CostumerBasket(string buyerId)
+    public CustomerBasket(string buyerId)
     {
         BuyerId = buyerId;
         Items = new List<BasketItem>();
