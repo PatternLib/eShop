@@ -1,4 +1,5 @@
 using EShopOnContainers.WebMvc.Extensions;
+using EShopOnContainers.WebMvc.Models;
 using EShopOnContainers.WebMvc.Services;
 
 namespace EShopOnContainers.WebMvc;
@@ -18,7 +19,15 @@ public class Startup
         services.AddMvc(setupAction: options => options.EnableEndpointRouting = false);
         services.AddOIDCAuthExtensions(Configuration);
         services.Configure<AppSettingsJson>(config: Configuration);
+
+        services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
+
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
+
         services.AddHttpClient<ICatalogServices, CatalogServices>();
+        services.AddHttpClient<IBasketServices, BasketServices>()
+            .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
