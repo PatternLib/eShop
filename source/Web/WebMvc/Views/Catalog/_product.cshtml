@@ -2,7 +2,7 @@
     @model CatalogItem
 }
 
-<form asp-controller="Cart" asp-action="AddToCart" class="card">
+<form asp-controller="Basket" asp-action="AddToBasket" class="card">
 
     <img src="@Model.PictureUri" class="card-img-top" alt="@Model.Name">
 
@@ -12,5 +12,9 @@
         <h5 class="card-title py-1 m-0 ">@Model.Price.ToString("N2")</h5>
     </div>
 
+    <input type="hidden" asp-for="@Model.Name"/>
+    <input type="hidden" asp-for="@Model.Description" />
+    <input type="hidden" asp-for="@Model.Price" />
+    <input type="hidden" asp-for="@Model.PictureUri" />
     <input type="hidden" asp-for="@Model.Id"/>
 </form>

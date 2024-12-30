@@ -23,8 +23,8 @@ public class CatalogController : Controller
         var vmodel = new CatalogIndexViewModel
         {
             CatalogItems = catalog.Data,
-            Brands = await _catalogSvc.GetAllBrandsAsync(),
-            Types = await _catalogSvc.GetAllTypesAsync(),
+            Brands = await _catalogSvc.GetCatalogBrandsAsync(),
+            Types = await _catalogSvc.GetCatalogTypesAsync(),
             BrandFilterApplied = brandFilterApplied,
             TypeFilterApplied = typeFilterApplied,
             PaginationInfo = new PaginationInfo

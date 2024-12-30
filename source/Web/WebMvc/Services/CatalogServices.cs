@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Text.Json.Nodes;
+﻿using System.Text.Json.Nodes;
 using EShopOnContainers.WebMvc.Domain;
 using EShopOnContainers.WebMvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,7 +12,7 @@ public class CatalogServices : ICatalogServices
     private readonly HttpClient _httpClient;
     private readonly ILogger<CatalogServices> _logger;
 
-    private readonly string _remoteServiceBaseUrl;
+    private readonly string _catalogUrl;
 
     public CatalogServices(IOptionsSnapshot<AppSettingsJson> settings, HttpClient httpClient, ILogger<CatalogServices> logger)
     {
@@ -21,12 +20,12 @@ public class CatalogServices : ICatalogServices
         _httpClient = httpClient;
         _logger = logger;
 
-        _remoteServiceBaseUrl = $"{_settings.CatalogUrl}/api/v1/catalog/";
+        _catalogUrl = $"{_settings.CatalogUrl}/api/v1/catalog/";
     }
 
     public async Task<Catalog> GetCatalogItemsAsync(int page, int take, int? brand, int? type)
     {
-        var uri = API.Catalog.GetAllCatalogItems(_remoteServiceBaseUrl, page, take, brand, type);
+        var uri = URI.Catalog.GetCatalogItemsUri(_catalogUrl, page, take, brand, type);
 
         var responseString = await _httpClient.GetStringAsync(requestUri: uri);
 
@@ -57,9 +56,29 @@ public class CatalogServices : ICatalogServices
         return catalog;
     }
 
-    public async Task<IEnumerable<SelectListItem>> GetAllBrandsAsync()
+    public async Task<CatalogItem> GetCatalogItemByIdAsync(int productId)
     {
-        var uri = API.Catalog.GetAllBrands(_remoteServiceBaseUrl);
+        var uri = URI.Catalog.GetCatalogItemByIdUri(baseUri: _catalogUrl, productId: productId);
+
+        var responseString = await _httpClient.GetStringAsync(requestUri: uri);
+
+        var jsonNode = JsonNode.Parse(json: responseString);
+
+        return new CatalogItem
+        {
+            Id = jsonNode["id"]!.GetValue<int>(),
+            Name = jsonNode["name"]!.GetValue<string>(),
+            Description = jsonNode["description"]!.GetValue<string>(),
+            Price = jsonNode["price"]!.GetValue<decimal>(),
+            PictureUri = jsonNode["pictureUri"]!.GetValue<string>(),
+            CatalogBrandId = jsonNode["catalogBrandId"]!.GetValue<int>(),
+            CatalogTypeId = jsonNode["catalogTypeId"]!.GetValue<int>()
+        };
+    }
+
+    public async Task<IEnumerable<SelectListItem>> GetCatalogBrandsAsync()
+    {
+        var uri = URI.Catalog.GetBrandsUri(baseUri: _catalogUrl);
 
         var responseString = await _httpClient.GetStringAsync(requestUri: uri);
 
@@ -83,9 +102,9 @@ public class CatalogServices : ICatalogServices
         return items;
     }
 
-    public async Task<IEnumerable<SelectListItem>> GetAllTypesAsync()
+    public async Task<IEnumerable<SelectListItem>> GetCatalogTypesAsync()
     {
-        var uri = API.Catalog.GetAllTypes(_remoteServiceBaseUrl);
+        var uri = URI.Catalog.GetTypesUri(baseUri: _catalogUrl);
 
         var responseString = await _httpClient.GetStringAsync(requestUri: uri);
 

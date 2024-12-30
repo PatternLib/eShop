@@ -1,5 +1,6 @@
 services:
-  dbcontext:
+
+  db.mysql:
     ports:
       - 3306:3306
     environment:
@@ -10,30 +11,53 @@ services:
       timeout: 20s
       retries: 10
 
-  identity:
+  basket.data:
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  identity.idp:
     ports:
       - "5105:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=${ESHOP_ASPNETCORE_URLS}
-      - ConnectionString=Server=dbcontext;Database=IdentityDb;User=root;Password=pass@word
+      - ConnectionString=Server=db.mysql;Database=IdentityDb;User=root;Password=pass@word
       - MvcClient=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5100
 
-  catalog:
+  catalog.api:
     ports:
       - "5101:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=${ESHOP_ASPNETCORE_URLS}
-      - ConnectionString=Server=dbcontext;Database=CatalogDb;User=root;Password=pass@word
+      - ConnectionString=Server=db.mysql;Database=CatalogDb;User=root;Password=pass@word
       - PicBaseUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5101/api/v1/catalog/items/[0]/pic/
+  
+  basket.api:
+    ports:
+      - "5103:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=${ESHOP_ASPNETCORE_URLS}
+      - ConnectionString=basket.data
+      - IdentityUrl=http://192.168.1.2:5105
 
-  webmvc:
+  web.mvc:
     ports:
       - "5100:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=${ESHOP_ASPNETCORE_URLS}
-      - CatalogUrl=http://catalog
+      - CatalogUrl=http://catalog.api
+      - BasketUrl=http://basket.api
       - IdentityUrl=http://192.168.1.2:5105 # See hosts file
       # docker network create eshop -o parent=eth0 --gateway=192.168.1.10  --subnet=192.168.1.0/24 -d macvlan
+
+# docker-compose up -d identity.idp catalog.api basket.api web.mvc
+
+# docker-compose down identity.idp catalog.api basket.api web.mvc

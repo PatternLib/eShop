@@ -21,7 +21,7 @@ public class Startup
         // Add services to the container
         services.AddMvc(setupAction: options => options.EnableEndpointRouting = false);
         services.AddMySqlContext(Configuration);
-        services.AddIdentity<ApplicationUser, IdentityRole>(setupAction: o => o.SignIn.RequireConfirmedAccount = true)
+        services.AddIdentity<ApplicationUser, IdentityRole>(/*setupAction: o => o.SignIn.RequireConfirmedAccount = true*/)
             .AddEntityFrameworkStores<OpenIDContext>()
             .AddDefaultTokenProviders();
         services.AddTransient<IEmailSender, EmailSender>();

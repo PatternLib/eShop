@@ -41,6 +41,9 @@ public static class IServiceCollectionExtensions
             // Register the OpenIddict server components.
             .AddServer(options =>
             {
+                // ERROR: Key unwrap failed using decryption Keys:
+                options.DisableAccessTokenEncryption();
+
                 // Enable the token endpoint.
                 options.SetAuthorizationEndpointUris(uris: "/connect/authorize")
                     .SetTokenEndpointUris(uris: "/connect/token")
@@ -58,7 +61,8 @@ public static class IServiceCollectionExtensions
                 {
                     OpenIddictConstants.Scopes.OpenId,
                     OpenIddictConstants.Scopes.Profile,
-                    OpenIddictConstants.Scopes.OfflineAccess
+                    OpenIddictConstants.Scopes.OfflineAccess,
+                    "basket"
                 });
 
                 // Register the signing and encryption credentials.

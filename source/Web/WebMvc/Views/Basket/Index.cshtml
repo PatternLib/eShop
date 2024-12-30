@@ -1,0 +1,77 @@
+﻿@{
+	ViewData["Title"] = "My Basket";
+	int counter = 0;
+	@model Basket
+
+}
+
+<section class="position-absolute top-0 start-0" style="margin-top: 70px;">
+
+	<div class="card border-0 rounded-0">
+
+		<img src="~/images/main_banner_custom.png" class="card-img border-0 rounded-0" alt="main_banner" height="260px" />
+
+		<div class="card-img-overlay">
+
+			<div class="container  align-content-center  h-100">
+				<img src="~/images/main_banner_text.svg" class="" alt="main_banner_text" />
+			</div>
+
+		</div>
+
+	</div>
+
+</section>
+
+<form method="post" id="basketForm" class="" style="margin-top: 326px;">
+	@foreach(var item in Model.Items)
+	{
+		<div class="card mb-3">
+			<div class="row g-0">
+				<div class="col-md-2">
+					<img src="@item.PictureUrl" class="img-fluid rounded-start" alt="@item.ProductName">
+				</div>
+				<div class="col-md-8">
+					<div class="card-body">
+						<h5 class="card-title">@item.ProductName</h5>
+						<h6 class="card-subtitle mb-2 text-muted">
+							<span class="fw-bold text-black">REF: </span>
+							<span class="text-muted">105114738638-941</span>
+						</h6>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="row d-flex flex-column align-items-center  h-100 pt-3">
+						<div class="col text-end pe-4">
+							<button class="btn btn-danger">
+								Delete
+							</button>
+						</div>
+						<div class="col text-end pe-4">
+							<h5 class="card-title">$ @((item.UnitPrice * item.Quantity).ToString(format: "N"))</h5>
+						</div>
+						<div class="col text-end pe-4">
+							<input type="hidden" name="quantities[@(counter)].Key" value="@item.Id" />
+							<input type="number" name="quantities[@(counter)].Value" value="@item.Quantity"
+								   oninput="this.form.elements['actionUpdate'].click()" class="form-control" min="1" placeholder="1" aria-label="quantity">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		counter++;
+	}
+	<div class="d-flex flex-row-reverse bd-highlight">
+		<div class="p-2 fw-bold">TOTAL</div>
+	</div>
+	<div class="d-flex flex-row-reverse bd-highlight">
+		<div class="p-2 bd-highlight">$ @Model.Total()</div>
+	</div>
+	<div class="d-flex justify-content-between">
+		<a asp-controller="Catalog" asp-action="Index" class="btn btn-outline-dark">[ BACK TO CATALOG ]</a>
+		<div>
+			<button type="submit" name="actionUpdate" value="[ UPDATE ]" class="btn btn-secondary">[ UPDATE ]</button>
+			<button type="submit" name="action" value="[ CHECKOUT ]" class="btn btn-success">[ CHECKOUT ]</button>
+		</div>
+	</div>
+</form>

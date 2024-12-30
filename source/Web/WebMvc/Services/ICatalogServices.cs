@@ -5,8 +5,9 @@ namespace EShopOnContainers.WebMvc.Services
 {
     public interface ICatalogServices
     {
-        Task<IEnumerable<SelectListItem>> GetAllBrandsAsync();
-        Task<IEnumerable<SelectListItem>> GetAllTypesAsync();
+        Task<IEnumerable<SelectListItem>> GetCatalogBrandsAsync();
+        Task<IEnumerable<SelectListItem>> GetCatalogTypesAsync();
         Task<Catalog> GetCatalogItemsAsync(int page, int take, int? brand, int? type);
+        Task<CatalogItem> GetCatalogItemByIdAsync(int productId);
     }
 }
